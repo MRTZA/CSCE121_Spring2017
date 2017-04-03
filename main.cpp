@@ -1,64 +1,100 @@
+#include <iostream>
 
-#include "std_lib_facilities_4.h"
-#include "Graph.h"
-#include "GUI.h"
-#include "Window.h"
-#include <iostream>    // for i/o
-#include <sstream>
-
-using namespace Graph_lib;
 using namespace std;
-
-// -----------------------------------------------
-// define a struct that is a window in which the
-// menu options can be displayed via a GUI
-
-struct Brokerage_window : Graph_lib::Window { // inherits from Window
-
-  // constructor
-  Brokerage_window(Point xy,    // top lefthand corner
-    int w,                      // width
-    int h,                      // height
-    const string& title);       // label
-
-private:
-
-  // widgets:
-  Menu options_menu;                   // menu of main options
-  Button menu_button;                  // button to display the option menu
-
-  // function members
-
-  void hide_menu() {
-    // hides the options menu and shows the button to display the menu
-    options_menu.hide();
-    menu_button.show();
-  }
-
-  void BrokerageState_pressed() {
-    //write in Graph.cpp & Graph.h??
-    hide_menu();
-  }
-
-
-}
 
 int main(){
 
-  // menu options
-  cout << "Options: " << endl
-  << "1. Display Brokerage State" << endl
-  << "2. New Patron" << endl
-  << "3. Existing Patron" << endl
-  << "4. Patron Info" << endl
-  << "5. Add Cash" << endl
-  << "6. Remove Cash" << endl
-  << "7. Stock Sale" << endl
-  << "8. Stock Buy" << endl
-  << "9. Overdrawn Patrons" << endl
-  << "10. Public Transaction History" << endl
-  << "11. Quit" << endl;
+  int choice = 0;
+  bool run = true;
 
-  return 0; // chacnges
+  while(run) {
+    // menu options
+    cout << "Options: " << endl
+    << "1. Display Brokerage State" << endl
+    << "2. New Patron" << endl
+    << "3. Existing Patron" << endl
+    << "4. Patron Info" << endl
+    << "5. Add Cash" << endl
+    << "6. Remove Cash" << endl
+    << "7. Stock Sale" << endl
+    << "8. Stock Buy" << endl
+    << "9. Overdrawn Patrons" << endl
+    << "10. Public Transaction History" << endl
+    << "11. Quit" << endl;
+
+    cin >> choice;
+
+    switch (choice) {
+      case 1: {cout << "1. Shares of a Stock Type" << endl
+      << "2. Shares of All Cash Accounts" << endl
+      << "3. All Shares" << endl;
+
+      cin >> choice;
+
+      switch (choice) {
+        case 1: {
+          cout << "1. First Stock Type" << endl
+          << "2. Second Stock Type" << endl
+          << "3. Third Stock Type" << endl
+          << "4. Fourth Stock Type" << endl
+          << "5. Fifth Stock Type" << endl;
+
+          cin >> choice;
+
+          switch (choice) {
+            case 1:{} //stuff
+            break;
+            case 2:{} //stuff
+            break;
+            case 3:{} //stuff
+            break;
+            case 4:{} //stuff
+            break;
+            case 5:{} //stuff
+            break;
+            default: {cout << "Please enter a valid option..." << endl; }
+            // loop back up so they can enter a valid integer
+            break;
+          }
+        }
+        break;
+        case 2: { /* output shares of all cash accounts */ }
+        break;
+        case 3: { /* output shares of all accounts */ }
+        break;
+        default: { cout << "Please enter a valid option..." << endl; }
+        // loop back up so they can enter a valid integer
+        break;
+      }
+    }
+    break;
+    case 2: { /* use constructor to make new patron, if account # matches dont add */ }
+    break;
+    case 3: { /* check if patron exists */ }
+    break;
+    case 4: { /* display all patrons */ }
+    break;
+    case 5: { /* using account number, add cash */ }
+    break;
+    case 6: { /* using account number, remove cash */ }
+    break;
+    case 7: { /* sale */ }
+    break;
+    case 8: { /* buy */ }
+    break;
+    case 9: { /* list deadbeats */ }
+    break;
+    case 10: { /* displays all transactions */ }
+    break;
+    case 11: { /* quits program */
+      run = false;
+    }
+    break;
+    default: {cout << "Please enter a valid option..." << endl;}
+    // loop back up so they can enter a valid integer
+    break;
+  }
+}
+return 0;
 
 }
