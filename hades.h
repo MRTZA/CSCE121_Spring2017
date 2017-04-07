@@ -50,8 +50,8 @@ public:
   vector<Transaction> get_trans() const { return t; }
 
   // modifying operations:
-  void add_patron(); // check if patron's acct num exists and initialize
-  void add_trans();
+  void add_patron(Patron n); // check if patron's acct num exists and initialize
+  void add_trans(Transaction n);
 
 private:
   vector<Patron> p;
