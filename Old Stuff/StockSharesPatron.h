@@ -38,9 +38,9 @@ class Patron {
 	
 	//helper functions
 	void add_shares(Transaction tt);		
-	void add_cash(Transaction tt);			//Code these
-	void remove_shares(Transaction tt);		//
-	void remove_cash(Transaction tt);		//
+	void add_cash(Transaction tt);			
+	void remove_shares(Transaction tt);		
+	void remove_cash(Transaction tt);		
 	
 	public:
 		Patron(string n, int a, double c);

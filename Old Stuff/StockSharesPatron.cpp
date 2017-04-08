@@ -71,6 +71,8 @@ Patron::Patron() {
 	portfolio.resize(5);
 }
 
+//Helper functions
+
 void Patron::add_shares(Transaction tt) {
 	int idx;
 	switch (tt.get_stock().get_type()) {
@@ -93,8 +95,45 @@ void Patron::add_shares(Transaction tt) {
 			error("Please use a valid stock type");
 	}
 	portfolio.at(idx) = portfolio.at(idx) + tt.share().get_amount();
-	accountBalance = accountBalance + tt.share().get_value();
+	accountBalance = accountBalance + tt.shares().get_value();
 }
+
+void Patron::add_cash(Transaction tt) {
+	cashAccount = cashAccount + tt.amount();
+	accountBalance = accountBalance + tt.amount();
+}
+
+void Patron::remove_shares(Transaction tt) {
+	int idx;
+	switch (tt.get_stock().get_type()) {
+		case "INTC":
+			idx = 0;
+			break;
+		case "GOOG":
+			idx = 1;
+			break;
+		case "AAPL":
+			idx = 2;
+			break;
+		case "YHOO":
+			idx = 3;
+			break;
+		case "IBM":
+			idx = 4;
+			break;
+		default:
+			error("Please use a valid stock type");
+	}
+	portfolio.at(idx) = portfolio.at(idx) - tt.share().get_amount();
+	accountBalance = accountBalance - tt.shares().get_value();
+}
+
+void Patron::remove_cash(Transaction tt) {
+	cashAccount = cashAccount - tt.amount();
+	accountBalance = accountBalance - tt.amount();
+}
+
+//End helper functions
 
 void Patron::add_transaction(Transaction t) {
 	transactions.push_back(t);
