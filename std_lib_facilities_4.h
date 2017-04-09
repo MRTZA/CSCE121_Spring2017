@@ -63,7 +63,7 @@ using stdext::hash_map;
 #include <ext/hash_map>
 using __gnu_cxx::hash_map;
 
-namespace __gnu_cxx {
+/*namespace __gnu_cxx {
 
     template<> struct hash<std::string>
     {
@@ -73,7 +73,7 @@ namespace __gnu_cxx {
         }
     };
 
-} // of namespace __gnu_cxx
+} // of namespace __gnu_cxx*/
 #endif //_MSC_VER
 #endif //GCC_VERSION >= 40603
 
@@ -124,10 +124,10 @@ template< class T> struct Vector : public std::vector<T> {
 };
 
 // disgusting macro hack to get a range checked vector:
-#define vector Vector
+// #define vector Vector
 
 // trivially range-checked string (no iterator checking):
-struct String : std::string {
+/* struct String : std::string {
 
 	String() { }
 	String(const char* p) :std::string(p) {}
@@ -147,7 +147,7 @@ struct String : std::string {
 		if (size()<=i) throw Range_error(i);
 		return std::string::operator[](i);
 	}
-};
+};*/
 
 #ifndef _MSC_VER
 #if GCC_VERSION >= 40603
@@ -163,7 +163,7 @@ namespace std {
 
 } // of namespace std
 #else
-namespace __gnu_cxx {
+/*namespace __gnu_cxx {
 
     template<> struct hash<String>
     {
@@ -173,7 +173,7 @@ namespace __gnu_cxx {
         }
     };
 
-} // of namespace __gnu_cxx
+} // of namespace __gnu_cxx*/
 #endif //GCC_VERSION >= 40603
 #endif //_MSC_VER
 
@@ -202,7 +202,7 @@ inline void error(const string& s, int i)
 
 #if _MSC_VER<1500
 	// disgusting macro hack to get a range checked string:
-	#define string String
+	// #define string String
 	// MS C++ 9.0 have a built-in assert for string range check
 	// and uses "std::string" in several places so that macro substitution fails
 #endif

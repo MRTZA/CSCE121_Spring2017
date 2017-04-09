@@ -4,7 +4,7 @@
 // "Programming -- Principles and Practice Using C++" by Bjarne Stroustrup
 //
 
-#include "Chrono.h"
+#include "chrono.h"
 
 namespace Chrono {
 

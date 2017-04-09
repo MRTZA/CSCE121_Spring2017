@@ -1,8 +1,11 @@
 
-#include "hades.h"
-#include "hades.cpp"
+#include "std_lib_facilities_4.h"
 
-using namespace hades;
+#include "hades.h"
+#include "chrono.h"
+
+using namespace chrono;
+using namespace Hades;
 
 int main() {
 
