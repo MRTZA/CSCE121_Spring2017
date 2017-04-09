@@ -61,7 +61,7 @@ private:
 
 //------------------------------------------------------------------------------
 
-bool patron_exists(Patron& p); // return true if patron acct num exists
+bool patron_exists(Patron p); // return true if patron acct num exists
 
 //------------------------------------------------------------------------------
 
@@ -192,6 +192,8 @@ public:
   void add(double n);
   void rem(double n);
 
+  void add_trans(Transaction t);
+
 private:
   string n;
   int a;
@@ -205,10 +207,6 @@ private:
 
 bool valid_name(string s); // return true if "firstname_lastname" format
 bool valid_acct_num(int n); // return true if non negative number
-
-//------------------------------------------------------------------------------
-
-void add_trans(Transaction t);
 
 //------------------------------------------------------------------------------
 
