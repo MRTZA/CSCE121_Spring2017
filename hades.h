@@ -32,9 +32,27 @@ class Stock;
 
 //------------------------------------------------------------------------------
 
+/* Patron Class:
+*
+* Holds information about the customers in Brokerage. I.E. name, account
+* number, stock shares held, cash account is USD, and account balance (total
+* assets) in USD
+*
+*/
+
+//------------------------------------------------------------------------------
+
 class Patron {
 public:
   class Invalid { }; // throw as exception
+
+  Patron(const Patron &ref) {
+	  this->n = ref.n;
+	  this->a = ref.a;
+	  this->s = ref.s;
+	  this->c = ref.c;
+	  this->b = ref.b;
+  }
 
   Patron(string n, int a); // check for valid name and acct num and initialize
   Patron(); // default constructor
@@ -52,8 +70,8 @@ public:
   void sale(Share *n);
   void buy(Share *n);
 
-  void add(double n) { c += n; }
-  void rem(double n) { c -= n; }
+  void add(double n) { c += n; set_bal(); }
+  void rem(double n) { c -= n; set_bal(); }
 
   void add_trans(Transaction *t);
 
@@ -99,17 +117,42 @@ public:
   vector<Patron *> get_patrons() const { return p; }
   vector<Transaction *> get_trans() const { return t; }
 
+  Share *get_share(int i) {
+    return s[i];
+  }
+
+  double get_totalCash() {
+    double temp;
+    for(int i = 0; i<p.size(); i++) {
+      temp += p[i]->get_cash();
+    }
+    return temp;
+  }
+
+  double get_totalUSD() {
+    double temp;
+    for(int i = 0; i<p.size(); i++) {
+      temp += p[i]->get_bal();
+    }
+    return temp;
+  }
+
   // modifying operations:
-  void add_patron(Patron n); // check if patron's acct num exists and initialize
-  void add_trans(Transaction n);
+  void add_patron(Patron *n); // check if patron's acct num exists and initialize
+  void add_trans(Transaction *n);
 
 private:
   vector<Patron *> p;
   vector<Transaction *> t;
 
-  bool patron_exists(Patron p); // return true if patron acct num exists
+  vector<Share *> s;
 
-  void brokerage_state(int n); // different ouput options (1-3)
+  double totalCash;
+  double totalUSD;
+
+  bool patron_exists(Patron *n); // return true if patron acct num exists
+
+  void brokerage_state(char n); // different ouput options (1-3)
 };
 
 //------------------------------------------------------------------------------
@@ -142,6 +185,11 @@ struct Stock {
 public:
   class Invalid { }; // throw as exception
 
+  Stock(const Stock &ref) {
+	  this->t = ref.t;
+	  this->p = ref.p;
+  }
+
   Stock(int t); // check for valid type and initialize
   Stock(); // default constructor
 
@@ -149,7 +197,7 @@ public:
   int get_type_num() const { return t; }
   double get_price() const { return p; }
 
-  string get_type(int n);
+  string get_type(int n) const;
 
 private:
   int t;
@@ -180,6 +228,12 @@ class Share {
 public:
   class Invalid { }; // throw as exception
 
+  Share(const Share &ref) {
+	  this->s = ref.s;
+	  this->a = ref.a;
+	  this->v = ref.v;
+  }
+
   Share(Stock *s, double a); // check for valid amount and initialize
   Share(); // default constructor
 
@@ -187,6 +241,10 @@ public:
   Stock *get_Stock() const { return s; }
   double get_amount() const { return a; }
   double get_value() const { return v; }
+
+  void change_amount(int change) {
+	  this->a += change;
+  }
 
   // modifying operations:
   void set_value() { v = s->get_price()*a; }
@@ -206,16 +264,6 @@ private:
 
 ostream& operator<<(ostream& os, const Share& s);
 istream& operator>>(istream& is, Share& ss);
-
-//------------------------------------------------------------------------------
-
-/* Patron Class:
-*
-* Holds information about the customers in Brokerage. I.E. name, account
-* number, stock shares held, cash account is USD, and account balance (total
-* assets) in USD
-*
-*/
 
 //------------------------------------------------------------------------------
 
@@ -239,6 +287,16 @@ struct Transaction {
 public:
   class Invalid { };
 
+  Transaction(const Transaction &ref) {
+	  this->d = ref.d;
+	  this->t = ref.t;
+	  this->p = ref.p;
+	  this->ty = ref.ty;
+	  this->s = ref.s;
+	  this->a = ref.a;
+	  this->c = ref.c;
+  }
+
   Transaction(Date d, Time t, Patron *p, int ty, Share *s); // check type is (1-2) and initialize
   Transaction(Date d, Time t, Patron *p, int ty, double a); // check type is (1-2) and amount is positive and initialize
   Transaction(); // default constructor
@@ -250,9 +308,9 @@ public:
   int get_type_num() const { return ty; }
   Share *get_share() const { return s; }
   double get_amount() const { return a; }
-  bool is_cash() { return c; }
+  bool is_cash() const { return c; }
 
-  string get_type(int n);
+  string get_type(int n) const;
 
 private:
   Date d;
