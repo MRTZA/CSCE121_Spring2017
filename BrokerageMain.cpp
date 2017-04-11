@@ -38,7 +38,7 @@ int main() {
   cin >> input_filename;
   /* implement if stream or do nothing if q */
 
-  cout << "Enter desired option:"
+  cout << "Enter desired option:" << endl
   << "1. display information about Stock Shares and Cash in the Brokerage" << endl
   << "2. add a new Patron to the Brokerage" << endl
   << "3. check if someone is already a Patron" << endl
@@ -93,7 +93,15 @@ int main() {
         }
       break;
       case 2: {
-
+        string name;
+        int ac;
+        cout << "What is your name?" << endl;
+        cin >> name;
+        cout << "What is your account number?" << endl;
+        cin >> ac;
+        Patron *p = new Patron(name, ac);
+        brok.add_patron(p);
+        cout << endl << p;
       }
       break;
       case 3: {
