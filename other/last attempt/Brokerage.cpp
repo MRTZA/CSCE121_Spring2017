@@ -190,6 +190,7 @@ void Patron::set_bal()
 {
   double temp;
   for(int i = 0; i < shares.size(); i++) {
+    cout << "share " << shares[i].get_value() << endl;
     temp += shares[i].get_value();
   }
   temp += cash;
@@ -482,44 +483,30 @@ Brokerage::Brokerage()
 
 void Brokerage::set_totalCash()
 {
-  double temp = 0.0;
   for(int i = 0; i<p.size(); i++) {
-    temp += p[i].get_cash();
+    cout << &p[i] << endl;
+    totalCash += p[i].get_cash();
   }
-  totalCash = temp;
 }
 
 //------------------------------------------------------------------------------
 
 void Brokerage::set_totalUSD()
 {
-  double temp = 0.0;
   for(int i = 0; i<p.size(); i++) {
-    temp += p[i].get_bal();
+    totalUSD += p[i].get_bal();
   }
-  totalUSD = temp;
 }
 
 //------------------------------------------------------------------------------
 
 void Brokerage::add_patron(Patron n)
 {
-  if(patron_exists(n)) { //throw Invalid();
-    for(int i = 0; i<p.size(); i++) {
-      if(p[i].get_acct_num() == n.get_acct_num()) {
-        p.erase(p.begin() + i);
-      }
-    }
-  }
-  set_totalCash();
-  set_totalUSD();
+  if(patron_exists(n)) { throw Invalid(); }
   p.push_back(n);
-  for(int i = 0; i < totalShares.size(); i++) {
-    totalShares[i] = n.get_shares()[i];
+  for(int i = 0; i<n.get_shares().size(); i++) {
+    totalShares.push_back(n.get_shares()[i]);
   }
-  // for(int i = 0; i<n.get_shares().size(); i++) {
-  //   totalShares.push_back(n.get_shares()[i]);
-  // }
   set_totalCash();
   set_totalUSD();
 }
@@ -530,6 +517,8 @@ void Brokerage::add_trans(Transaction n)
 {
   if(!patron_exists(n.get_patron())) { throw Invalid(); }
   t.push_back(n);
+  set_totalCash();
+  set_totalUSD();
 }
 
 //------------------------------------------------------------------------------

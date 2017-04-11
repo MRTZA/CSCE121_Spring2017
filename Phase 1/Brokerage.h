@@ -217,7 +217,7 @@ private:
   string actual;
   double amount;
 
-  double value = 1.0;
+  double value = amount;
 
 
   bool isCash = false; // constructor sets true if cash transaction
