@@ -1,4 +1,3 @@
-
 /* Authors: Grant Hill, Jordan Edwards, Murtaza Hakimi
 *
 * ProjectSpring2017:
@@ -9,9 +8,10 @@
 * plus the special Project Cover Sheet and a standard testing doc. All
 * appropriate error conditions will also be tested for correct handling.
 *
+* g++ BrokerageMain.cpp Brokerage.cpp Chrono.cpp -std=c++11 -o BrokerageMain
 */
 
-#include "chrono.h"
+#include "Chrono.h"
 
 using namespace Chrono;
 
@@ -38,18 +38,18 @@ namespace Hades {
 
 struct Stock {
 public:
-  class Invalid { }; // throw as exception
+	class Invalid { }; // throw as exception
 
-  Stock(string t); // check for valid type and initialize
-  Stock(); // default constructor
+	Stock(string t); // check for valid type and initialize
+	Stock(); // default constructor
 
-  // non-modifying operations:
-  double get_price() const { return price; }
-  string get_type() const { return type; }
+	// non-modifying operations:
+	double get_price() const { return price; }
+	string get_type() const { return type; }
 
 private:
-  string type;
-  double price;
+	string type;
+	double price;
 };
 
 //------------------------------------------------------------------------------
@@ -74,30 +74,34 @@ istream& operator>>(istream& is, Stock& ss);
 
 class Share {
 public:
-  class Invalid { }; // throw as exception
+	class Invalid { }; // throw as exception
 
-  Share(Stock s, double a); // check for valid amount and initialize
-  Share(); // default constructor
+	Share(Stock s, double a); // check for valid amount and initialize
+	Share(); // default constructor
 
-  // non-modifying operations:
-  Stock get_stock() const { return stock; }
-  double get_amount() const { return amount; }
-  double get_value() const { return value; }
+	// non-modifying operations:
+	Stock get_stock() const { return stock; }
+	double get_amount() const { return amount; }
+	double get_value() const { return value; }
 
-  // modifying operations:
-  void set_value() { value = stock.get_price()*amount; }
-  void change_amount(int change) {
-    amount += change;
-    set_value();
-  }
+	// modifying operations:
+	void set_value() {
+		value = stock.get_price()*amount;
+	}
+	void change_amount(int change) {
+		amount += change;
+		set_value();
+	}
 
 //------------------------------------------------------------------------------
 
 private:
-bool valid_amount(double n) {
-  if(n >= 0) { return true; }
-  return false;
-} // returns true if amount is a positive number
+	bool valid_amount(double n) {
+		if(n >= 0) {
+			return true;
+		}
+		return false;
+	} // returns true if amount is a positive number
 
 //------------------------------------------------------------------------------
 
@@ -126,47 +130,47 @@ istream& operator>>(istream& is, Share& ss);
 
 class Patron {
 public:
-  class Invalid { }; // throw as exception
+	class Invalid { }; // throw as exception
 
-  Patron(string n, int a); // check for valid name and acct num and initialize
-  Patron(); // default constructor
+	Patron(string n, int a); // check for valid name and acct num and initialize
+	Patron(); // default constructor
 
-  // non-modifying operations:
-  string get_name() const { return name; }
-  int get_acct_num() const { return acct_num; }
-  vector<Share> get_shares() const { return shares; }
-  double get_cash() const { return cash; }
-  double get_bal() const { return bal; }
+	// non-modifying operations:
+	string get_name() const { return name; }
+	int get_acct_num() const { return acct_num; }
+	vector<Share> get_shares() const { return shares; }
+	double get_cash() const { return cash; }
+	double get_bal() const { return bal; }
 
-  // modifying operations:
-  void set_bal();
+	// modifying operations:
+	bool set_bal();
 
-  void sale(Share n);
-  void buy(Share n);
+	bool sale(Share n);
+	bool buy(Share n);
 
-  void add(double n) { cash += n; set_bal(); }
-  void rem(double n) { cash -= n; set_bal(); }
-
-//------------------------------------------------------------------------------
-
-private:
-  bool valid_name(string s); // return true if "firstname_lastname" format
-
-//------------------------------------------------------------------------------
-
-  bool valid_acct_num(int n) {
-    if(n>=0 && n<=9999) { return true; }
-    return false;
-  } // return true if non negative number
+	bool add(double n) { cash += n; set_bal(); return true; }
+	bool rem(double n) { cash -= n; set_bal(); return true;}
 
 //------------------------------------------------------------------------------
 
 private:
-  string name;
-  int acct_num;
-  vector<Share> shares;
-  double cash;
-  double bal;
+	bool valid_name(string s); // return true if "firstname_lastname" format
+
+	bool valid_acct_num(int n) {
+		if(n>=0 && n<=9999) {
+			return true;
+		}
+		return false;
+	} // return true if non negative number
+
+//------------------------------------------------------------------------------
+
+private:
+	string name;
+	int acct_num;
+	vector<Share> shares;
+	double cash;
+	double bal;
 };
 
 //------------------------------------------------------------------------------
@@ -194,45 +198,47 @@ istream& operator>>(istream& is, Patron& pp);
 
 struct Transaction {
 public:
-  class Invalid { };
+	class Invalid { };
 
-  Transaction(Date date, Time time, Patron patron, string type, string actual, double amount); // check type is (1-2) and initialize
-  Transaction(); // default constructor
+	Transaction(Date date, Time time, Patron patron, string type, string actual, double amount); // check type is (1-2) and initialize
+	Transaction(); // default constructor
 
-  // non-modifying operations:
-  Date get_date() const { return date; }
-  Time get_time() const { return time; }
-  Patron get_patron() const { return patron; }
-  double get_amount() const { return amount; }
-  bool is_cash() const { return isCash; }
-  string get_type() const { return type; };
-  string get_actual() const { return actual; }
-  double get_value() const { return value; }
+	// non-modifying operations:
+	Date get_date() const { return date; }
+	Time get_time() const { return time; }
+	Patron get_patron() const { return patron; }
+	double get_amount() const { return amount; }
+	bool is_cash() const { return isCash; }
+	string get_type() const { return type; };
+	string get_actual() const { return actual; }
+	double get_value() const { return value; }
 
 private:
-  Date date;
-  Time time;
-  Patron patron;
-  string type;
-  string actual;
-  double amount;
+	Date date;
+	Time time;
+	Patron patron;
+	string type;
+	string actual;
+	double amount;
 
-  double value = amount;
+	double value = amount;
 
 
-  bool isCash = false; // constructor sets true if cash transaction
+	bool isCash = false; // constructor sets true if cash transaction
 
 //------------------------------------------------------------------------------
 
-  bool valid_type(string n); // returns true if add, sale, buy, or remove
+	bool valid_type(string n); // returns true if add, sale, buy, or remove
 //------------------------------------------------------------------------------
 
-  bool valid_act(string n);  // returns true if 1 of four stocks or "cash"
+	bool valid_act(string n);  // returns true if 1 of four stocks or "cash"
 //------------------------------------------------------------------------------
 
-  bool valid_am(double n) {
-    if(n>=0) { return true; }
-    return false;
+	bool valid_am(double n) {
+		if(n>=0) {
+			return true;
+		}
+		return false;
   } // returns true if positive number
 
 //------------------------------------------------------------------------------
@@ -258,32 +264,34 @@ istream& operator>>(istream& is, Transaction& tt);
 
 class Brokerage {
 public:
-  class Invalid { }; // throw as exception
+	class Invalid { }; // throw as exception
 
-  Brokerage(string file_name); // check for valid file name and initialize
-  Brokerage(); // default constructor
+	Brokerage(string file_name); // check for valid file name and initialize
+	Brokerage(); // default constructor
 
-  // non-modifying operations:
-  vector<Patron> get_patrons() { return p; }
-  vector<Transaction> get_trans() const { return t; }
-  vector<Share> get_total_shares() const { return totalShares; }
-  double get_total_cash() const { return totalCash; }
-  double get_total_USD() const { return totalUSD; }
+	// non-modifying operations:
+	vector<Patron> get_patrons() const { return p; }
+	vector<Transaction> get_trans() const { return t; }
+	vector<Share> get_total_shares() const { return totalShares; }
+	double get_total_cash() const { return totalCash; }
+	double get_total_USD() const { return totalUSD; }
 
-  // modifying operations:
-  void set_totalCash();
-  void set_totalUSD();
-  void add_patron(Patron n); // check if patron's acct num exists and initialize
-  void add_trans(Transaction n);
+	// modifying operations:
+	void set_totalCash();
+	void set_totalUSD();
+	void add_patron(Patron n); // check if patron's acct num exists and initialize
+	void add_trans(Transaction n);
 
-  bool patron_exists(Patron n); // return true if patron acct num exists
+	bool patron_exists(Patron n); // return true if patron acct num exists
+
+//------------------------------------------------------------------------------
 
 private:
-  vector<Patron> p;
-  vector<Transaction> t;
-  vector<Share> totalShares;
-  double totalCash;
-  double totalUSD;
+	vector<Patron> p;
+	vector<Transaction> t;
+	vector<Share> totalShares;
+	double totalCash;
+	double totalUSD;
 };
 
 //------------------------------------------------------------------------------
@@ -293,4 +301,4 @@ istream& operator>>(istream& is, Brokerage& bb);
 
 //------------------------------------------------------------------------------
 
-} // hades
+} // Brokerage
