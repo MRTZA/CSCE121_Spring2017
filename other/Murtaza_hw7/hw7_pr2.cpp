@@ -108,6 +108,8 @@ private:
   void next();   // defined below
 
   void quit();   // defined below
+  void showBrokerage();
+  void add
 
   // callback functions; declared here and defined below.
 

@@ -22,7 +22,7 @@ Window::Window(int ww, int hh, const string& title)
 
 Window::Window(Point xy, int ww, int hh, const string& title)
     :Fl_Window(xy.x,xy.y,ww,hh,title.c_str()),w(ww),h(hh)
-{ 
+{
     init();
 }
 
@@ -63,7 +63,7 @@ void Window::detach(Widget& b)
 void Window::detach(Shape& s)
     // guess that the last attached will be first released
 {
-	for (vector<Shape*>::size_type i = shapes.size(); 0<i; --i)    
+	for (vector<Shape*>::size_type i = shapes.size(); 0<i; --i)
         if (shapes[i-1]==&s)
             shapes.erase(shapes.begin()+(i-1));
 }

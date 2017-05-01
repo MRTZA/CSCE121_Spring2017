@@ -92,6 +92,17 @@ private:
   // void next();   // defined below
 
    void quit();   // defined below
+   void showBrokerage();
+   void addPatron();
+   void isPatron();
+   void patrons();
+   void addCash();
+   void remCash();
+   void sellStock();
+   void buyStock();
+   void deadbeats();
+   void transactions();
+   void transfer();
 
   // callback functions; declared here and defined below.
 
